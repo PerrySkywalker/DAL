@@ -58,7 +58,7 @@ class Classifier(nn.Module):
         AA = self.attention(x)  ## K x N
         afeat = torch.mm(AA, x) ## K x L
         logits = self.classifier(afeat) ## K x num_cls
-        Y_hat = torch.ge(logits, 0.5).float()
         Y_prob = F.sigmoid(logits)
+        Y_hat = torch.ge(Y_prob, 0.5).float()
         results_dict = {'logits': logits, 'Y_prob': Y_prob, 'Y_hat': Y_hat}
         return results_dict
